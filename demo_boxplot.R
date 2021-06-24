@@ -30,8 +30,8 @@ half <- function(x) (x / 2)
 
   tibble(data.frame(map_at(tibble(data.frame(map_at(mpg, "class", RENAMER))), "hwy", half))) %>%
   mutate(class = fct_reorder(class, hwy, .fun='median')) %>%
-  ggplot(mapping = aes(x=reorder(class, hwy), y=hwy, fill=class)) + #fill = class totally unnecessary
-  geom_violin(show.legend = FALSE)+
+  ggplot(mapping = aes(reorder(class, hwy), hwy, fill=class)) + #fill = class totally unnecessary
+  geom_boxplot(show.legend = FALSE)+
   geom_hline(yintercept = 12) +
   xlab("Days from today")+
   ylab("Soil temperature (degrees C)")+
