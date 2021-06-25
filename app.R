@@ -12,6 +12,8 @@ plot_ribbon <- function(ddf, date, site, period) {#period :: Int, site :: String
 ui <- fluidPage("Predicting Soil Temps",
                 selectInput("site", label="Choose a site",
                             c("breeza", "dalby", "dubbo","emerald", "moree", "surat", "warra")),
+                dateInput("date", label="Choose a date to start at"),
+                sliderInput("period", "Forecast for how many days?", 7, 21, 14, round = TRUE),
                 textOutput("result"))
 
 server <- function(input, output) {
