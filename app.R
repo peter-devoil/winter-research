@@ -1,10 +1,11 @@
 library(shiny)
 library(tidyverse)
-source("ribbon_plot.R")
-#This code assumes a data frame called ddf is in the environment already... FIXME
+library(lubridate)
+library(Hmisc)
+ddf <- readRDS("ddf.RData") #ddf is a Daily Data Frame ("one I prepared earlier" haha) which has clean data
 
-plot_ribbon <- function(ddf, date, siteLoc, period) {#period :: Int, site :: String, date :: Date, ddf :: data.frame
-  filter(ddf, between(Date, date, date + days(period)), site == siteLoc) %>%
+plot_ribbon <- function(df, date, siteLoc, period) {#period :: Int, site :: String, date :: Date, ddf :: data.frame
+  filter(df, between(Date, date, date + days(period)), site == siteLoc) %>%
     ggplot() +
     geom_smooth(stat = 'summary', alpha = 0.5, fill = "gray", mapping = aes(daysFromStart, soil_mint_1),
                 fun.data = median_hilow, fun.args = list(conf.int = 0.5))
