@@ -1,0 +1,970 @@
+<folder version="37" creator="Apsim 7.10-r0" name="simulations">
+  <simulation name="Forecast Template">
+    <metfile name="met">
+      <filename name="filename" input="yes">Dalby.met</filename>
+    </metfile>
+    <clock />
+    <summaryfile />
+    <area name="paddock">
+      <Soil>
+        <RecordNumber>0</RecordNumber>
+        <SoilType>Black Vertosol</SoilType>
+        <LocalName>Waco</LocalName>
+        <Site>Jimbour</Site>
+        <NearestTown>Jimbour, Q 4352</NearestTown>
+        <Region>South East Queensland</Region>
+        <NaturalVegetation>Grassland, mainly Qld bluegrass</NaturalVegetation>
+        <Latitude>0</Latitude>
+        <Longitude>0</Longitude>
+        <YearOfSampling>0</YearOfSampling>
+        <!--<SoilTemperature>
+             <BoundaryLayerConductance>20</BoundaryLayerConductance>
+             <Thickness>
+                 <double>100</double>
+                 <double>200</double>
+                 <double>300</double>
+             </Thickness>
+             <InitialSoilTemperature>
+                 <double>13</double>
+                 <double>12</double>
+                 <double>12</double>
+             </InitialSoilTemperature>
+         </SoilTemperature>-->
+        <InitialWater name="Initial water">
+          <FractionFull>1</FractionFull>
+          <PercentMethod>FilledFromTop</PercentMethod>
+        </InitialWater>
+        <Water>
+          <Thickness>
+            <double>150</double>
+            <double>150</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+          </Thickness>
+          <BD>
+            <double>1.02</double>
+            <double>1.03</double>
+            <double>1.02</double>
+            <double>1.02</double>
+            <double>1.06</double>
+            <double>1.11</double>
+            <double>1.12</double>
+            <double>1.15</double>
+            <double>1.18</double>
+            <double>1.2</double>
+            <double>1.25</double>
+          </BD>
+          <AirDry>
+            <double>0.145</double>
+            <double>0.26</double>
+            <double>0.29</double>
+            <double>0.29</double>
+            <double>0.3</double>
+            <double>0.31</double>
+            <double>0.32</double>
+            <double>0.33</double>
+            <double>0.34</double>
+            <double>0.35</double>
+            <double>0.36</double>
+          </AirDry>
+          <LL15>
+            <double>0.29</double>
+            <double>0.29</double>
+            <double>0.29</double>
+            <double>0.29</double>
+            <double>0.3</double>
+            <double>0.31</double>
+            <double>0.32</double>
+            <double>0.33</double>
+            <double>0.34</double>
+            <double>0.35</double>
+            <double>0.36</double>
+          </LL15>
+          <DUL>
+            <double>0.54</double>
+            <double>0.53</double>
+            <double>0.54</double>
+            <double>0.54</double>
+            <double>0.52</double>
+            <double>0.5</double>
+            <double>0.5</double>
+            <double>0.48</double>
+            <double>0.47</double>
+            <double>0.46</double>
+            <double>0.44</double>
+          </DUL>
+          <SAT>
+            <double>0.59</double>
+            <double>0.58</double>
+            <double>0.59</double>
+            <double>0.58</double>
+            <double>0.57</double>
+            <double>0.55</double>
+            <double>0.55</double>
+            <double>0.53</double>
+            <double>0.52</double>
+            <double>0.51</double>
+            <double>0.49</double>
+          </SAT>
+          
+        </Water>
+        <SoilWater>
+          <SummerCona>3.5</SummerCona>
+          <SummerU>6</SummerU>
+          <SummerDate>1-Nov</SummerDate>
+          <WinterCona>3.5</WinterCona>
+          <WinterU>6</WinterU>
+          <WinterDate>1-Apr</WinterDate>
+          <DiffusConst>40</DiffusConst>
+          <DiffusSlope>16</DiffusSlope>
+          <Salb>0.13</Salb>
+          <CN2Bare>73</CN2Bare>
+          <CNRed>20</CNRed>
+          <CNCov>0.8</CNCov>
+          <Slope>NaN</Slope>
+          <DischargeWidth>NaN</DischargeWidth>
+          <CatchmentArea>NaN</CatchmentArea>
+          <MaxPond>NaN</MaxPond>
+          <Thickness>
+            <double>150</double>
+            <double>150</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+          </Thickness>
+          <SWCON>
+            <double>0.3</double>
+            <double>0.3</double>
+            <double>0.3</double>
+            <double>0.3</double>
+            <double>0.3</double>
+            <double>0.3</double>
+            <double>0.3</double>
+            <double>0.3</double>
+            <double>0.3</double>
+            <double>0.3</double>
+            <double>0.3</double>
+          </SWCON>
+        </SoilWater>
+        <SoilOrganicMatter>
+          <RootCN>40</RootCN>
+          <RootWt>200</RootWt>
+          <SoilCN>12.5</SoilCN>
+          <EnrACoeff>7.4</EnrACoeff>
+          <EnrBCoeff>0.2</EnrBCoeff>
+          <Thickness>
+            <double>150</double>
+            <double>150</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+          </Thickness>
+          <OC>
+            <double>1.04</double>
+            <double>0.89</double>
+            <double>0.89</double>
+            <double>0.89</double>
+            <double>0.77</double>
+            <double>0.45</double>
+            <double>0.27</double>
+            <double>0.22</double>
+            <double>0.16</double>
+            <double>0.13</double>
+            <double>0.12</double>
+          </OC>
+          <FBiom>
+            <double>0</double>
+            <double>0</double>
+            <double>0</double>
+            <double>0</double>
+            <double>0</double>
+            <double>0</double>
+            <double>0</double>
+            <double>0</double>
+            <double>0</double>
+            <double>0</double>
+            <double>0</double>
+          </FBiom>
+          <FInert>
+            <double>1</double>
+            <double>1</double>
+            <double>1</double>
+            <double>1</double>
+            <double>1</double>
+            <double>1</double>
+            <double>1</double>
+            <double>1</double>
+            <double>1</double>
+            <double>1</double>
+            <double>1</double>
+          </FInert>
+          <OCUnits>Total</OCUnits>
+        </SoilOrganicMatter>
+        <Analysis>
+          <Thickness>
+            <double>150</double>
+            <double>150</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+          </Thickness>
+          <Texture>
+            <string />
+            <string />
+            <string />
+            <string />
+            <string />
+            <string />
+            <string />
+            <string />
+            <string />
+            <string />
+            <string />
+          </Texture>
+          <MunsellColour>
+            <string />
+            <string />
+            <string />
+            <string />
+            <string />
+            <string />
+            <string />
+            <string />
+            <string />
+            <string />
+            <string />
+          </MunsellColour>
+          <EC>
+            <double>0.2</double>
+            <double>0.25</double>
+            <double>0.31</double>
+            <double>0.4</double>
+            <double>0.59</double>
+            <double>0.84</double>
+            <double>0.93</double>
+            <double>1.01</double>
+            <double>1.06</double>
+            <double>1.05</double>
+            <double>1.01</double>
+          </EC>
+          <PH>
+            <double>8.4</double>
+            <double>8.8</double>
+            <double>9</double>
+            <double>9.2</double>
+            <double>9.2</double>
+            <double>9.1</double>
+            <double>9</double>
+            <double>9</double>
+            <double>8.9</double>
+            <double>8.9</double>
+            <double>8.9</double>
+          </PH>
+          <ParticleSizeSand>
+            <double>22</double>
+            <double>22</double>
+            <double>22</double>
+            <double>22</double>
+            <double>22</double>
+            <double>22</double>
+            <double>22</double>
+            <double>22</double>
+            <double>22</double>
+            <double>22</double>
+            <double>22</double>
+          </ParticleSizeSand>
+          <ParticleSizeSilt>
+            <double>16</double>
+            <double>16</double>
+            <double>16</double>
+            <double>16</double>
+            <double>16</double>
+            <double>16</double>
+            <double>16</double>
+            <double>16</double>
+            <double>16</double>
+            <double>16</double>
+            <double>16</double>
+          </ParticleSizeSilt>
+          <ParticleSizeClay>
+            <double>62</double>
+            <double>62</double>
+            <double>62</double>
+            <double>62</double>
+            <double>62</double>
+            <double>62</double>
+            <double>62</double>
+            <double>62</double>
+            <double>62</double>
+            <double>62</double>
+            <double>62</double>
+          </ParticleSizeClay>
+          <PHUnits>Water</PHUnits>
+          <BoronUnits>HotWater</BoronUnits>
+        </Analysis>
+        <Sample name="Initial nitrogen">
+          <Thickness>
+            <double>150</double>
+            <double>150</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+            <double>300</double>
+          </Thickness>
+          <NO3>
+            <double>0</double>
+            <double>0</double>
+            <double>0</double>
+            <double>0</double>
+            <double>0</double>
+            <double>0</double>
+            <double>0</double>
+            <double>0</double>
+            <double>0</double>
+            <double>0</double>
+            <double>0</double>
+          </NO3>
+          <NH4>
+            <double>0</double>
+            <double>0</double>
+            <double>0</double>
+            <double>0</double>
+            <double>0</double>
+            <double>0</double>
+            <double>0</double>
+            <double>0</double>
+            <double>0</double>
+            <double>0</double>
+            <double>0</double>
+          </NH4>
+          <NO3Units>ppm</NO3Units>
+          <NH4Units>ppm</NH4Units>
+          <SWUnits>Volumetric</SWUnits>
+          <OCUnits>Total</OCUnits>
+          <PHUnits>Water</PHUnits>
+        </Sample>
+        <SoilTemperature2>
+          <MaxTTimeDefault>14</MaxTTimeDefault>
+          <BoundaryLayerConductanceSource>calc</BoundaryLayerConductanceSource>
+          <BoundaryLayerConductance>20</BoundaryLayerConductance>
+          <BoundaryLayerConductanceIterations>1</BoundaryLayerConductanceIterations>
+          <NetRadiationSource>calc</NetRadiationSource>
+          <DefaultWindSpeed>3</DefaultWindSpeed>
+          <DefaultAltitude>18</DefaultAltitude>
+          <DefaultInstrumentHeight>1.2</DefaultInstrumentHeight>
+          <BareSoilHeight>57</BareSoilHeight>
+        </SoilTemperature2>
+      </Soil>
+      <surfaceom name="SurfaceOrganicMatter">
+        <PoolName type="text" description="Organic Matter pool name">wheat</PoolName>
+        <type type="list" listvalues="bambatsi,barley,base_type,broccoli,camaldulensis,canola,centro,chickpea,chikenmanure_base,cm,cmA,cmB,constants,cotton,cowpea,danthonia,fababean,fieldpea,fym,gbean,globulus,goatmanure,grandis,grass,horsegram,inert,lablab,lentil,lucerne,lupin,maize,manB,manure,medic,millet,mucuna,nativepasture,navybean,oats,orobanche,peanut,pigeonpea,potato,rice,sorghum,soybean,stylo,sugar,sunflower,sweetcorn,sweetsorghum,tillage,tithonia,vetch,weed,wheat" description="Organic Matter type">wheat</type>
+        <mass type="text" description="Initial surface residue (kg/ha)">1000</mass>
+        <cnr type="text" description="C:N ratio of initial residue">80</cnr>
+        <standing_fraction type="text" description="Fraction of residue standing">0</standing_fraction>
+      </surfaceom>
+      <fertiliser />
+      <sorghum />
+      <folder name="Manager folder">
+        <manager name="Site">
+          <ui>
+            <site type="text" description="Site"></site>
+            <emember type="text" description="Ensemble member"></emember>
+          </ui>
+          <script>
+            <text>
+site = '[site]'
+emember = '[emember]'
+</text>
+            <event>init</event>
+          </script>
+        </manager>
+        <manager2 name="Crop Management">
+          <ui>
+            <category type="category" description="Crop properties" />
+            <crop type="crop" description="Name of this crop">sorghum</crop>
+            <category type="category" description="Sowing criteria" />
+            <sowdate type="ddmmmdate" description="Enter sowing window START date (dd-mmm)">1-aug</sowdate>
+            <date3 type="ddmmmdate" description="Enter cultivar change date (na if not in use)">na</date3>
+            <must_sow type="yesno" description="Must Sow">yes</must_sow>
+            <rain_amount type="text" description="Enter amount of cumulative rainfall (mm)">30</rain_amount>
+            <rain_days type="text" description="Enter number of days to accumulate rainfall (days)">3</rain_days>
+            <esw_amount type="text" description="Enter amount of soil water (mm)">200</esw_amount>
+            <category type="category" description="Sowing Parameters" />
+            <cultivar1 type="cultivars" description="Enter cultivar : ">early</cultivar1>
+            <cultivar2 type="cultivars" description="Enter 2nd Cultivar (na if not using a second cultivar)">na</cultivar2>
+            <density1 type="text" description="Enter sowing density  (plants/m2)">7</density1>
+            <depth1 type="text" description="Enter sowing depth  (mm)">30</depth1>
+            <row_spacing1 type="text" description="Enter row spacing  (mm)">1000</row_spacing1>
+            <category type="category" description="Extra Parameters" />
+            <ftn1 type="text" description="Enter Fertile Tiller Number (na for auto) : ">na</ftn1>
+            <skiprow1 type="list" listvalues="solid, single, double" description="Skip row : ">solid</skiprow1>
+            <tillageImplement type="text" description="Name of tillage implement (na if not in use): ">na</tillageImplement>
+          </ui>
+          <text>using System;
+using ModelFramework;
+using CSGeneral;
+
+// Basic crop management: sowing &amp; harvesting.
+// Multi-paddock aware.
+// This component DOES NOT require a trigger from the sequencer.
+// It will assume it is the only crop in the system if it doesnt find a sequencer.
+// If it does find a sequencer, it will do nothing until told to (via Enter/Leave).
+public class Script 
+{      
+   [Link()]  public Simulation MySimulation;
+   
+   [Param()] private string crop;         // The module name of this crop
+   [Param()] private string sowdate;         //Start of sowing window
+   [Param()] int esw_amount;
+   [Param()] private string must_sow;
+
+   [Input()] private DateTime today;
+
+   // Rainfall accumulator
+   [Param()] int rain_days;              //check for rain over this period
+   [Param()] int rain_amount;            //this much rain over that period
+
+   // Daily rainfall from the system
+   [Input] private double rain;
+   private ManagerUtility.Tracker&lt;double&gt; rainTracker; 
+
+   private bool inWindow = false;
+   private bool endOfWindow = false;
+   private bool ChangeCultivar = false;
+
+   //initialise tracker, telling it how many days to track
+   [EventHandler] public void OnInitialised()
+   {
+      rainTracker = new ManagerUtility.Tracker&lt;double&gt;(rain_days); 
+   }
+
+   // Daily tests common to all paddocks
+   [EventHandler] public void OnPrepare()
+   {
+      bool startOfWindow = DateUtility.DatesEqual(sowdate, today);
+
+      inWindow = DateUtility.WithinDates(sowdate, today, sowdate);
+      ChangeCultivar = false;
+      endOfWindow = DateUtility.DatesEqual(sowdate, today);
+
+      rainTracker.Add(rain);
+      string currentPaddock = "";
+      if (MySimulation.Get("currentPaddock", out currentPaddock) == false) 
+      {
+         // If there is no sequencer plugged in then we are it..
+         if (canEnter &gt; 0) {
+            OnEnter();
+         }
+         if (canLeave &gt; 0) {
+            OnLeave();
+         }
+      }
+   }
+   // Test whether we can sow a crop today
+   // +ve number - yes
+   // 0          - no
+   // -ve number - no, out of scope (planting window)
+   [Output, Description("Test whether we can sow a crop today")] public int canEnter  {
+      get {
+         bool isPossibleToday = false;
+         
+         string currentPaddock;
+         MySimulation.Get("currentPaddock", out currentPaddock);
+         //Console.WriteLine("1. '" + currentPaddock + "'");
+
+         Component paddockModule;
+         if (currentPaddock != "")
+            paddockModule = (Component) MySimulation.LinkByName(currentPaddock);
+         else
+            paddockModule = (Component) MySimulation.ChildPaddocks[0];
+         //Console.WriteLine("2. " + paddockModule.Name);
+
+         Component cropModule = (Component) paddockModule.LinkByName( crop );
+
+         //Console.WriteLine("3. " + cropModule.Name);
+         string plantStatus = "";
+         cropModule.Get("plant_status", out plantStatus);
+
+         double esw = 0.0;
+         Component soilModule = (Component) paddockModule.LinkByType("SoilWat");
+         soilModule.Get("esw", out esw);
+         if (plantStatus == "out" &amp;&amp;
+             inWindow &amp;&amp;
+             rainTracker.Sum() &gt;= rain_amount &amp;&amp;
+             esw &gt; esw_amount) 
+         {
+             isPossibleToday = true;
+         } 
+
+	     if (isPossibleToday)
+            return 1;
+         
+         if (plantStatus == "out" &amp;&amp; endOfWindow &amp;&amp; must_sow == "yes")
+            return 1;
+
+         if (plantStatus == "out" &amp;&amp; !inWindow)
+            return -1;
+         
+         return 0;
+      }
+   }  
+   
+   
+   // Sow a crop
+   [Param()] private string cultivar1;
+   [Param()] private string cultivar2;
+   [Param()] private double density1;
+   [Param()] private double depth1;
+   [Param()] private double row_spacing1;
+   [Param()] private string ftn1;
+   [Param()] private string skiprow1;
+   [Param()] private string tillageImplement;
+   
+   [EventHandler, Description("Sow the crop")] public void OnEnter()
+   {
+      Console.WriteLine(today + " Sowing Crop");
+      SowType data = new SowType();
+      data.Cultivar = cultivar1;
+      if(ChangeCultivar)
+         data.Cultivar = cultivar2;
+
+      data.plants = density1;
+      data.sowing_depth = depth1;
+      data.row_spacing = row_spacing1;
+      data.tiller_no_fertile = (ftn1 == "na") ? "" : ftn1;
+      data.SkipRow = 0 ;
+      if (skiprow1 == "single")
+         data.SkipRow = 1;
+      else if (skiprow1 == "double")
+         data.SkipRow = 2;
+
+      string currentPaddock;
+      MySimulation.Get("currentPaddock", out currentPaddock);
+      Component cropModule;
+      if (currentPaddock != "")
+         cropModule = (Component) MySimulation.LinkByName(currentPaddock + "." + crop);
+      else 
+         cropModule = (Component) MySimulation.ChildPaddocks[0].LinkByName(crop);
+
+      cropModule.Publish("Sow", data);
+
+      if (tillageImplement.ToLower() != "na") 
+	  {
+         TillageType t = new TillageType();
+         t.type = tillageImplement;
+         Component paddockModule;
+         if (currentPaddock != "")
+            paddockModule = (Component) MySimulation.LinkByName(currentPaddock);
+         else
+            paddockModule = MySimulation.ChildPaddocks[0];
+         paddockModule.Publish("tillage", t);
+      }		 
+   }
+
+   // Test whether we can harvest a crop today
+   // +ve number - yes
+   // 0          - no
+   // -ve        - out of scope
+   [Output] public int canLeave  
+   {
+      get 
+      {
+         string currentPaddock;
+         MySimulation.Get("currentPaddock", out currentPaddock);
+
+         string plantStatus = "";
+         MySimulation.Get((currentPaddock != "" ? currentPaddock + "." : "") + crop + ".plant_status", out plantStatus);
+         if (plantStatus == "out")
+            return -1;
+
+         string StageName = "";
+         MySimulation.Get((currentPaddock != "" ? currentPaddock + "." : "") + crop + ".StageName", out StageName);
+         if (StageName == "harvest_ripe" || plantStatus == "dead")
+            return 1;
+         return 0;
+      }
+   }
+
+   [EventHandler] public void OnLeave()
+   {
+      Console.WriteLine(today + " Harvesting Crop");
+      HarvestType hdata = new HarvestType();
+      hdata.Remove = 0.0;
+      string currentPaddock;
+      MySimulation.Get("currentPaddock", out currentPaddock);
+      Component cropModule;
+      if (currentPaddock != "")
+         cropModule = (Component) MySimulation.LinkByName(currentPaddock + "." + crop);
+      else 
+         cropModule = (Component) MySimulation.ChildPaddocks[0].LinkByName(crop);
+
+      cropModule.Publish("harvest", hdata);
+
+      KillCropType kdata = new KillCropType();
+      kdata.KillFraction = 0.0F;
+      cropModule.Publish("killcrop", kdata);
+      cropModule.Publish("end_crop");
+   } 
+}
+       </text>
+        </manager2>
+        <manager name="Resets">
+          <ui>
+            <category type="category" description="When should a reset be done" />
+            <sowdate type="ddmmmdate" description="Enter date of reset (dd-mmm) : ">1-aug</sowdate>
+            <category type="category" description="Reset details" />
+            <soilmodule type="modulename" description="Name of your soil module : ">Soil</soilmodule>
+            <surfaceommodule type="modulename" description="Name of your surface organic matter module : ">SurfaceOrganicMatter</surfaceommodule>
+            <pmodule type="modulename" description="Name of your phosphorus module : ">Phosphorus</pmodule>
+            <resetWater type="yesno" description="Reset soil water?">yes</resetWater>
+            <resetNitrogen type="yesno" description="Reset soil nitrogen?">yes</resetNitrogen>
+            <resetSurfaceOM type="yesno" description="Reset surface organic matter?">yes</resetSurfaceOM>
+            <resetP type="yesno" description="Reset phosphorus?">no</resetP>
+          </ui>
+          <script>
+            <text>
+         if (today = date('[sowdate]')) then
+                '[soilmodule] Water' reset
+                '[soilmodule] Nitrogen' reset
+                '[surfaceommodule]' reset
+                !SoilTemperature2 set gAveTsoil = 18.197 17.867 17.089 17.205 18.101 19.202 20.278 21.256 22.117 22.866 23.520 
+                SoilTemperature2 init2
+                !SoilTemperature reset
+            act_mods reseting
+         endif
+    </text>
+            <event>start_of_day</event>
+          </script>
+          <script>
+            <text>
+         if (met.maxt &lt; (met.mint + 1)) then
+            met.maxt = met.mint + 1
+         endif
+         if (met.radn &lt; 5) then
+            met.radn = 5
+         endif
+         if (met.radn &gt; 30) then
+            met.radn = 30
+         endif
+         ! Ensure soiltemp guesses the same starting conditions each year
+         ! vvv autogenerated vvv
+
+    </text>
+            <event>prenewmet</event>
+          </script>
+        </manager>
+        <manager2 name="Report on specific days">
+          <ui>
+            <title type="category" description="Don't forget to remove any reporting frquency variables from your selected Outputfile." />
+            <sowdate type="ddmmmdate" description="Enter date of reset (dd-mmm) : ">1-aug</sowdate>
+            <reset_days type="text" description="Enter days to monitor after reset (n) : ">120</reset_days>
+            <dailymodule type="modulename" description="The daily output module to report to.">daily</dailymodule>
+            <seasonmodule type="modulename" description="The season output module to report to.">season</seasonmodule>
+          </ui>
+          <text>
+using System;
+using ModelFramework;
+using CSGeneral;
+
+public class Script 
+{      
+   [Link] Paddock paddock;
+   [Input] DateTime Today; 
+   [Input] double stage;
+   [Input] int DaysAfterSowing;
+   [Param] [Output] string sowdate;
+   [Param] int reset_days;
+   [Param] string dailymodule;
+   [Param] string seasonmodule;
+
+   private Outputfile dailyOutput;
+   private Outputfile seasonOutput;
+
+   [EventHandler] public void OnInitialised()
+   {
+      dailyOutput = (Outputfile) paddock.LinkByName(dailymodule);
+      seasonOutput = (Outputfile) paddock.LinkByName(seasonmodule);
+      cropIn = false;
+      emergDAS = -1;
+   }
+
+   private bool cropIn;
+   [Output] public int emergDAS;
+   [EventHandler] public void OnSowing()
+   {
+      cropIn = true;
+      emergDAS = -1;
+   }
+   [EventHandler] public void OnHarvesting() 
+   {
+      cropIn = false;
+      emergDAS = -1;
+   }
+
+   [EventHandler] public void OnPost()
+   {
+     if ((int)stage == 3 &amp;&amp; emergDAS &lt; 0) 
+        emergDAS = DaysAfterSowing;
+    
+      DateTime t0 = DateUtility.GetDate(sowdate, Today);
+      DateTime t1;
+      int[] daysAfter = {7, 14, 21, 30};
+      foreach (var i in daysAfter) {
+         t1 = t0.AddDays(i);
+         if (Today.CompareTo(t0) &gt;= 0 &amp;&amp; Today.CompareTo(t1) == 0) {
+            paddock.Publish("reset" + i.ToString());
+            Console.WriteLine("Reset day " + i.ToString() + "=" + Today);
+         }
+      }
+      t1 = t0.AddDays(reset_days);
+      if (Today.CompareTo(t0) &gt;= 0 &amp;&amp; Today.CompareTo(t1) &lt;= 0) {
+          dailyOutput.DoOutput();
+      }
+      if (Today.CompareTo(t0) &gt;= 0 &amp;&amp; Today.CompareTo(t1) == 0) {
+          seasonOutput.DoOutput();
+      }
+   }  
+}
+   </text>
+        </manager2>
+        <manager name="LAI">
+          <script>
+            <text>
+peakLAI = 0
+end_of_juvenile_das = 0
+floral_initiation_das = 0
+swStressAvg = -1
+ptq_30_flowering = -1
+DaysAfterFlowering = -1
+DaysAfterFI = -1
+</text>
+            <event>init</event>
+          </script>
+          <script>
+            <text>
+if (lai &gt; peakLAI) then
+   peakLAI = lai
+endif
+
+if (end_of_juvenile_das = 0 AND stageName = 'end_of_juvenile') then
+   end_of_juvenile_das = daysAfterSowing
+endif
+
+if (DaysAfterFI &gt;= 0) then
+   DaysAfterFI = DaysAfterFI + 1
+   if (DaysAfterFI = 7) then
+       act_mods 'fi_7'
+   endif   
+endif
+
+endif
+if (floral_initiation_das &lt;= 0 AND stageName = 'floral_initiation') then
+   floral_initiation_das = daysAfterSowing
+   DaysAfterFI = 0
+endif
+
+if (DaysAfterFlowering &gt;= 0) then
+   DaysAfterFlowering = DaysAfterFlowering + 1
+endif
+if (DaysAfterFlowering &lt; 0 AND stageName = 'flowering') then
+   DaysAfterFlowering = 0
+   ptq_30_flowering = ptq30
+endif
+
+if (DaysAfterFlowering = 7) then
+   swStressAvg = swdef_photo_14
+endif
+
+</text>
+            <event>end_of_day</event>
+          </script>
+          <script>
+            <text>
+peakLAI = 0
+end_of_juvenile_das = 0
+floral_initiation_das = 0
+swStressAvg = -1
+ptq_30_flowering = -1
+DaysAfterFlowering = -1
+DaysAfterFI = -1
+</text>
+            <event>sowing</event>
+          </script>
+        </manager>
+        <manager2 name="PTQ">
+          <ui />
+          <text>using System;
+using ModelFramework;
+using CSGeneral;
+
+public class Script
+{
+   private ManagerUtility.Tracker&lt;double&gt; ptqTracker; 
+   private ManagerUtility.Tracker&lt;double&gt; swTracker; 
+   private ManagerUtility.Tracker&lt;int&gt; mint14_2Tracker; 
+   private ManagerUtility.Tracker&lt;int&gt; mint14_1Tracker; 
+   private ManagerUtility.Tracker&lt;int&gt; mint14_0Tracker; 
+   private ManagerUtility.Tracker&lt;int&gt; mint7_2Tracker; 
+   private ManagerUtility.Tracker&lt;int&gt; mint7_1Tracker; 
+   private ManagerUtility.Tracker&lt;int&gt; mint7_0Tracker; 
+   private ManagerUtility.Tracker&lt;int&gt; avgst7_12Tracker; 
+   private ManagerUtility.Tracker&lt;int&gt; avgst14_12Tracker; 
+   private ManagerUtility.Tracker&lt;int&gt; avgst21_12Tracker; 
+   [EventHandler] public void OnInitialised()
+   {
+      ptqTracker = new ManagerUtility.Tracker&lt;double&gt;(30); 
+      swTracker = new ManagerUtility.Tracker&lt;double&gt;(14); 
+      mint7_2Tracker= new ManagerUtility.Tracker&lt;int&gt;(7); 
+      mint7_1Tracker= new ManagerUtility.Tracker&lt;int&gt;(7); 
+      mint7_0Tracker= new ManagerUtility.Tracker&lt;int&gt;(7); 
+      mint14_2Tracker= new ManagerUtility.Tracker&lt;int&gt;(14); 
+      mint14_1Tracker= new ManagerUtility.Tracker&lt;int&gt;(14); 
+      mint14_0Tracker= new ManagerUtility.Tracker&lt;int&gt;(14); 
+      avgst7_12Tracker= new ManagerUtility.Tracker&lt;int&gt;(7); 
+      avgst14_12Tracker= new ManagerUtility.Tracker&lt;int&gt;(14); 
+      avgst21_12Tracker= new ManagerUtility.Tracker&lt;int&gt;(21); 
+   }
+
+   // Daily tests common to all paddocks
+   [EventHandler] public void OnNewMet(NewMetType n)
+   {
+      ptqTracker.Add( n.radn / ( (n.maxt + n.mint) / 2.0 ) );
+      mint14_2Tracker.Add( n.mint &lt; 2 ? 1 : 0);
+      mint14_1Tracker.Add( n.mint &lt; 1 ? 1 : 0);
+      mint14_0Tracker.Add( n.mint &lt; 0 ? 1 : 0);
+      mint7_2Tracker.Add( n.mint &lt; 2 ? 1 : 0);
+      mint7_1Tracker.Add( n.mint &lt; 1 ? 1 : 0);
+      mint7_0Tracker.Add( n.mint &lt; 0 ? 1 : 0);
+   }
+   
+   [Input] private double swdef_photo;
+   [Input] private double[] mint_soil;
+   [EventHandler] public void OnPost()
+   {
+      swTracker.Add( swdef_photo );
+      avgst7_12Tracker.Add( mint_soil[0] &lt; 12.0? 1 : 0);
+      avgst14_12Tracker.Add( mint_soil[0] &lt; 12.0? 1 : 0);
+      avgst21_12Tracker.Add( mint_soil[0] &lt; 12.0? 1 : 0);
+   }
+   [Output, Description("Sum of photo thermal quotient for last 30 days")] public double ptq30  {
+      get { return(ptqTracker.Sum()); }
+      set { }
+   }
+   [Output, Description("average of swdef_photo for last 14 days")] public double swdef_photo_14  {
+      get { return(swTracker.Sum() / 14.0); }
+      set { }
+   }
+   [Output, Description("number of mint less than 2oC over last 7 days")] public int mint_2_7  {
+      get { return(mint7_2Tracker.Sum() ); }
+      set { }
+   }
+   [Output, Description("number of mint less than 1oC over last 7 days")] public int mint_1_7  {
+      get { return(mint7_1Tracker.Sum() ); }
+      set { }
+   }
+   [Output, Description("number of mint less than 0 oC over last 7 days")] public int mint_0_7  {
+      get { return(mint7_0Tracker.Sum() ); }
+      set { }
+   }
+   [Output, Description("number of mint less than 2oC over last 14 days")] public int mint_2_14  {
+      get { return(mint14_2Tracker.Sum() ); }
+      set { }
+   }
+   [Output, Description("number of mint less than 1oC over last 14 days")] public int mint_1_14  {
+      get { return(mint14_1Tracker.Sum() ); }
+      set { }
+   }
+   [Output, Description("number of mint less than 0 oC over last 14 days")] public int mint_0_14  {
+      get { return(mint14_0Tracker.Sum() ); }
+      set { }
+   }
+
+   [Output, Description("number of avg_sw_(1) less than 12 oC over last 7 days")] public int avgst7_12  {
+      get { return(avgst7_12Tracker.Sum() ); }
+      set { }
+   }
+   [Output, Description("number of avg_sw_(1) less than 12 oC over last 14 days")] public int avgst14_12  {
+      get { return(avgst14_12Tracker.Sum() ); }
+      set { }
+   }
+   [Output, Description("number of avg_sw_(1) less than 12 oC over last 21 days")] public int avgst21_12  {
+      get { return(avgst21_12Tracker.Sum() ); }
+      set { }
+   }
+
+}
+</text>
+        </manager2>
+      </folder>
+      <outputfile name="Daily">
+        <filename output="yes">Sorghum Daily.out</filename>
+        <title>Sorghum Daily</title>
+        <variables name="Variables">
+          <variable>dd/mm/yyyy as Date</variable>
+          <variable>site</variable>
+          <variable>emember</variable>
+          <variable>sowdate</variable>
+          <variable>esw</variable>
+          <variable>sw_dep(1) as swdep_1</variable>
+          <variable>ave_soil_temp(1) as soil_temp_1</variable>
+          <variable>mint_soil(1) as soil_mint_1</variable>
+        </variables>
+        <events name="Reporting Frequency" />
+      </outputfile>
+      <tracker name="Tracker">
+        <variable>average of mint_soil(1) on end_of_day from reseting to reset7 as avg_st_1_7</variable>
+        <variable>average of mint_soil(1) on end_of_day from reseting to reset14 as avg_st_1_14</variable>
+        <variable>average of mint_soil(1) on end_of_day from reseting to reset21 as avg_st_1_21</variable>
+        <variable>average of mint_soil(1) on end_of_day from reseting to reset30 as avg_st_1_30</variable>
+        <variable>average of mint_soil(1) on end_of_day from reset7 to reset14 as avg_st_7_14</variable>
+        <variable>average of mint_soil(1) on end_of_day from reset14 to reset21 as avg_st_14_21</variable>
+        <variable>value of mint_2_7 on reset7 as n_mint_7_2</variable>
+        <variable>value of mint_1_7 on reset7 as n_mint_7_1</variable>
+        <variable>value of mint_0_7 on reset7 as n_mint_7_0</variable>
+        <variable>value of mint_2_14 on reset14 as n_mint_14_2</variable>
+        <variable>value of mint_1_14 on reset14 as n_mint_14_1</variable>
+        <variable>value of mint_0_14 on reset14 as n_mint_14_0</variable>
+        <variable>value of mint_2_14 on fi_7 as n_mint_fi_2</variable>
+        <variable>value of mint_1_14 on fi_7 as n_mint_fi_1</variable>
+        <variable>value of mint_0_14 on fi_7 as n_mint_fi_0</variable>
+        <variable>value of avgst7_12 on reset7 as n_avgst7_12</variable>
+        <variable>value of avgst14_12 on reset14 as n_avgst14_12</variable>
+        <variable>value of avgst21_12 on reset21 as n_avgst21_12</variable>
+      </tracker>
+    </area>
+  </simulation>
+  <factorial name="Factorials">
+    <active>0</active>
+    <settings />
+  </factorial>
+</folder>
