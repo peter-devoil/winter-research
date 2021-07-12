@@ -1,9 +1,10 @@
 Format:
-description and relevant files (type of output file) ->
+description and relevant files (format of output file) ->
 
 silo data (.netcdf) ->
-    peter's getItsshParallel.R and AllSites.csv (.met) ->
-        linden's apsimFileGenerator.R (.apsim) ->
+    peter's getIt.bomNC.R and AllSites.csv (.met) ->
+        linden's apsimFileGenerator.R and Template.apsim (.apsim) ->
             cron calls APSIM (.out) ->
-                some_r_script.R (.RData) ->
-                    shiny app.R (web app)
+                simCollector.R (.RData) ->
+                    cron copies ddf.YYYY-MM-DD.RData from Peter's workstation to nectar:/srv/shiny-server/lwells/ ->
+                        shiny app.R (web app)

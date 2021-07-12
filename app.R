@@ -2,7 +2,9 @@ library(shiny)
 library(tidyverse)
 library(lubridate)
 library(Hmisc)
-ddf <- readRDS("ddf.RData") #ddf is a Daily Data Frame ("one I prepared earlier" haha) which has clean data
+files <- list.files(pattern = "[.]RData")
+ddf <- readRDS(files[1]) #ddf is a Daily Data Frame ("one I prepared earlier" haha) which has clean data
+# This app will pick the first .Rdata file in the working directory that it finds
 
 plot_ribbon <- function(df, date, siteLoc, period) {#period :: Int, site :: String, date :: Date, ddf :: data.frame
   filter(df, between(Date, date, date + days(period)), site == siteLoc) %>%

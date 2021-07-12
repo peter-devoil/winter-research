@@ -1,4 +1,5 @@
 library(tibble)
+library(lubridate)
 read.out <- function(out.name) {
   header<-readLines(out.name, n=5)
   i <- grep("^Title = *", trimws(header), ignore.case=T)
@@ -19,6 +20,9 @@ read.out <- function(out.name) {
   return(sim)
 }
 
-# Should match filenames of the format "YYYYMMDD.sitename.eXX.out". why can't I prepend the below pattern with '^'? Confused.
-df <- do.call(rbind, lapply(list.files(path=".", "[[:digit:]]{6}[.]\\w+[.]e[[:digit:]]{2}[.]out$"), read.out))
+# Should match filenames of the format "YYYYMMDD.sitename.eXX.out".
+# FIXME why can't I prepend the below pattern with '^'? Confused.
+ddf <- do.call(rbind, lapply(list.files(path=".", "[[:digit:]]{6}[.]\\w+[.]e[[:digit:]]{2}[.]out$"), read.out))
+
+saveRDS(ddf, paste0("ddf.", today(), ".RData")) #TODO beware this gets today's date, NOT necessarily the date of the forecasts.
 
