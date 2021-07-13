@@ -712,7 +712,7 @@
         <standing_fraction type="text" description="Fraction of residue standing">0</standing_fraction>
       </surfaceom>
       <outputfile>
-        <filename output="yes">template.out</filename>
+        <filename name="filename" output="yes">template.out</filename>
         <title>template</title>
         <variables name="Variables">
           <variable>dd/mm/yyyy as Date</variable>

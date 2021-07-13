@@ -8,8 +8,8 @@ read.out <- function(out.name) {
   names(sim) <- unlist(strsplit(trimws(header[i + 1]), " +"))
   sim$Date <- as.Date(sim$Date,"%d/%m/%Y")
   
-  dummy <- unlist(strsplit(out.name, "\\."))
-  if (length(dummy) != 4) {stop(paste0("funny filename: ", out.name, " Pls make sure it's in the format YYYYMMDD.sitename.e%d.out"))}
+  dummy <- unlist(strsplit(out.name, "\\.|_")) # split on . and _
+  if (length(dummy) != 4) {stop(paste0("funny filename: ", out.name, " Pls make sure it's in the format YYYYMMDD_sitename_eXX.out"))}
   forecastDate <- dummy[[1]]
   site <- dummy[[2]]
   emember <- dummy[[3]]
@@ -20,9 +20,9 @@ read.out <- function(out.name) {
   return(sim)
 }
 
-# Should match filenames of the format "YYYYMMDD.sitename.eXX.out".
+# Should match filenames of the format "YYYYMMDD_sitename_eXX.out".
 # FIXME why can't I prepend the below pattern with '^'? Confused.
-ddf <- do.call(rbind, lapply(list.files(path=".", "[[:digit:]]{6}[.]\\w+[.]e[[:digit:]]{2}[.]out$"), read.out))
+ddf <- do.call(rbind, lapply(list.files(path=".", "[[:digit:]]{6}_\\w+_e[[:digit:]]{2}[.]out$"), read.out))
 
 saveRDS(ddf, paste0("ddf.", today(), ".RData")) #TODO beware this gets today's date, NOT necessarily the date of the forecasts.
 

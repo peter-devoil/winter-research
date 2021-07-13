@@ -6,7 +6,7 @@ pad <- function(num) {
   return(sprintf("%02d", num))
 }
 
-# Expects a .met file with name YYYYMMDD.Site.emember#.met and a .apsim template
+# Expects a .met file with name YYYYMMDD.sitename.eXX.met and a .apsim template
 # Will do nothing if an apsim file with the same name as metfile is already there. 
 apsimFileGen <- function(metFileName, templateFileName) {
 
@@ -20,13 +20,18 @@ apsimFileGen <- function(metFileName, templateFileName) {
   if (outFN %in% list.files()) { # skiip if there's already an apsim file
     return(TRUE)
   } else {
-    file.copy(from = templateFileName, to = outFN)
-    doc <- xmlParse(outFN)
+    #file.copy(from = templateFileName, to = outFN)
+    doc <- xmlParse(templateFileName)
     for (node in getNodeSet(doc, "//filename[@name='filename' and @input='yes']")) {
       xmlValue(node) <- paste(date, site, emember, "met", sep=".")
     }
+    
+    for (node in getNodeSet(doc, "//simulation")) { # Set simulation name
+      removeAttributes(node)
+      xmlAttrs(node) <- c(name = paste(date, site, emember, sep = "_"))
+    }
     for (node in getNodeSet(doc, "//clock/start_date")) {
-      x <- ymd(date) + days(10)
+      x <- ymd(date) + days(10) #FIXME get dates from met file
       xmlValue(node) <- paste0(pad(day(x)), '/', pad(month(x)), '/', year(x))
     }
     for (node in getNodeSet(doc, "//clock/end_date")) {
@@ -49,11 +54,13 @@ apsimFileGen <- function(metFileName, templateFileName) {
       xmlValue(node) <- paste(date, site, emember, sep=".")
     }
     
-    saveXML(doc, outFN)
+    saveXML(doc, paste0("files/", outFN))
     return(TRUE)
   }
 }
 
-for (filename in list.files(pattern = "*.met")) {
+# Should match filenames of the format "YYYYMMDD.sitename.eXX.out".
+# FIXME why can't I prepend the below pattern with '^'? Confused. 
+for (filename in list.files("files", pattern = "[[:digit:]]{6}[.]\\w+[.]e[[:digit:]]{2}[.]met$")) {
   apsimFileGen(filename, "Template.apsim")
 }
