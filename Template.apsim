@@ -601,8 +601,10 @@
             <double>300</double>
             <double>300</double>
             <double>300</double>
+            <double>999999</double>
           </Thickness>
           <Texture>
+            <string />
             <string />
             <string />
             <string />
@@ -627,6 +629,7 @@
             <string />
             <string />
             <string />
+            <string />
           </MunsellColour>
           <EC>
             <double>0.2</double>
@@ -640,6 +643,7 @@
             <double>1.06</double>
             <double>1.05</double>
             <double>1.01</double>
+            <double>NaN</double>
           </EC>
           <PH>
             <double>8.4</double>
@@ -653,7 +657,50 @@
             <double>8.9</double>
             <double>8.9</double>
             <double>8.9</double>
+            <double>NaN</double>
           </PH>
+          <ParticleSizeSand>
+            <double>22</double>
+            <double>22</double>
+            <double>22</double>
+            <double>22</double>
+            <double>22</double>
+            <double>22</double>
+            <double>22</double>
+            <double>22</double>
+            <double>22</double>
+            <double>22</double>
+            <double>22</double>
+            <double>22</double>
+          </ParticleSizeSand>
+          <ParticleSizeSilt>
+            <double>16</double>
+            <double>16</double>
+            <double>16</double>
+            <double>16</double>
+            <double>16</double>
+            <double>16</double>
+            <double>16</double>
+            <double>16</double>
+            <double>16</double>
+            <double>16</double>
+            <double>16</double>
+            <double>16</double>
+          </ParticleSizeSilt>
+          <ParticleSizeClay>
+            <double>62</double>
+            <double>62</double>
+            <double>62</double>
+            <double>62</double>
+            <double>62</double>
+            <double>62</double>
+            <double>62</double>
+            <double>62</double>
+            <double>62</double>
+            <double>62</double>
+            <double>62</double>
+            <double>62</double>
+          </ParticleSizeClay>
           <PHUnits>Water</PHUnits>
           <BoronUnits>HotWater</BoronUnits>
         </Analysis>
@@ -703,6 +750,17 @@
           <OCUnits>Total</OCUnits>
           <PHUnits>Water</PHUnits>
         </Sample>
+        <SoilTemperature2>
+          <MaxTTimeDefault>14</MaxTTimeDefault>
+          <BoundaryLayerConductanceSource>calc</BoundaryLayerConductanceSource>
+          <BoundaryLayerConductance>20</BoundaryLayerConductance>
+          <BoundaryLayerConductanceIterations>1</BoundaryLayerConductanceIterations>
+          <NetRadiationSource>calc</NetRadiationSource>
+          <DefaultWindSpeed>3</DefaultWindSpeed>
+          <DefaultAltitude>18</DefaultAltitude>
+          <DefaultInstrumentHeight>1.2</DefaultInstrumentHeight>
+          <BareSoilHeight>57</BareSoilHeight>
+        </SoilTemperature2>
       </Soil>
       <surfaceom name="SurfaceOrganicMatter">
         <PoolName type="text" description="Organic Matter pool name">wheat</PoolName>
@@ -716,10 +774,7 @@
         <title>template</title>
         <variables name="Variables">
           <variable>dd/mm/yyyy as Date</variable>
-          <variable>day</variable>
-          <variable>year</variable>
-          <variable>Rain</variable>
-          <variable>st</variable>
+          <variable>mint_soil(1) as soil_mint_1</variable>
         </variables>
         <events name="Reporting Frequency">
           <event>end_day</event>
