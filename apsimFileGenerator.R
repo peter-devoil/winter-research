@@ -6,6 +6,26 @@ pad <- function(num) {
   return(sprintf("%02d", num))
 }
 
+# Returns a list of length 2 containing the first and last dates in the .met file
+getDates <- function(metFileName) {
+  header <- readLines(metFileName, n = 25L)
+  footer <- tail(readLines(metFileName), n = 25L)
+  
+  # This is error prone, but the first row of data should be 2 lines after col names.
+  i <- grep("^year day rain maxt mint radn$", trimws(header)) + 2
+  if (i <= 0) {return(NULL)}
+  
+  startLine <- strsplit(header[i], split = " ")[[1]][1:2]
+  start <- parse_date_time(paste(startLine[1], startLine[2]), "Y j")
+  
+  indices <- grep("[[:digit:]]", footer)
+  if (indices) {endLine <- footer[[max(indices)]][[1]]} else {return(NULL)}
+  endLine <- strsplit(endLine, split = " ")[[1]]
+  end <- parse_date_time(paste(endLine[1], endLine[2]), "Y j")
+  
+  return(list(start, end))
+}
+
 # Expects a .met file with name YYYYMMDD.sitename.eXX.met and a .apsim template
 # Will do nothing if an apsim file with the same name as metfile is already there. 
 apsimFileGen <- function(metFileName, templateFileName) {
@@ -20,7 +40,6 @@ apsimFileGen <- function(metFileName, templateFileName) {
   if (outFN %in% list.files()) { # skiip if there's already an apsim file
     return(TRUE)
   } else {
-    #file.copy(from = templateFileName, to = outFN)
     doc <- xmlParse(templateFileName)
     for (node in getNodeSet(doc, "//filename[@name='filename' and @input='yes']")) {
       xmlValue(node) <- paste(date, site, emember, "met", sep=".")
@@ -30,12 +49,19 @@ apsimFileGen <- function(metFileName, templateFileName) {
       removeAttributes(node)
       xmlAttrs(node) <- c(name = paste(date, site, emember, sep = "_"))
     }
+    
+    # get Dates from the contents of the metfile, rather than the name of the metfile
+    dates <- getDates(metFileName)
+    if (length(dates) != 2) {
+      stop("Can't read start and end dates from metfile: ", metFileName)
+    }
+    
     for (node in getNodeSet(doc, "//clock/start_date")) {
-      x <- ymd(date) + days(10) #FIXME get dates from met file
+      x <- dates[[1]]
       xmlValue(node) <- paste0(pad(day(x)), '/', pad(month(x)), '/', year(x))
     }
     for (node in getNodeSet(doc, "//clock/end_date")) {
-      x <- ymd(date) + days(60)
+      x <- dates[[2]]
       xmlValue(node) <- paste0(pad(day(x)), '/', pad(month(x)), '/', year(x))
     }
     for (node in getNodeSet(doc, "//filename[@output='yes']")) {
@@ -60,7 +86,6 @@ apsimFileGen <- function(metFileName, templateFileName) {
 }
 
 # Should match filenames of the format "YYYYMMDD.sitename.eXX.out".
-# FIXME why can't I prepend the below pattern with '^'? Confused. 
-for (filename in list.files("files", pattern = "[[:digit:]]{6}[.]\\w+[.]e[[:digit:]]{2}[.]met$")) {
+for (filename in list.files("files", pattern = "[[:digit:]]{8}[.]\\w+[.]e[[:digit:]]{2}[.]met$")) {
   apsimFileGen(filename, "Template.apsim")
 }
