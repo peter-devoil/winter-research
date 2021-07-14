@@ -1,6 +1,9 @@
 library("XML")
 library("lubridate")
 
+metFileDir <- "files/"
+outFileDir <- "files/"
+
 # Helper function to pad a day or month out to 2 digits when applicable
 pad <- function(num) {
   return(sprintf("%02d", num))
@@ -51,7 +54,7 @@ apsimFileGen <- function(metFileName, templateFileName) {
     }
     
     # get Dates from the contents of the metfile, rather than the name of the metfile
-    dates <- getDates(metFileName)
+    dates <- getDates(paste0(metFileDir, metFileName))
     if (length(dates) != 2) {
       stop("Can't read start and end dates from metfile: ", metFileName)
     }
@@ -80,12 +83,12 @@ apsimFileGen <- function(metFileName, templateFileName) {
       xmlValue(node) <- paste(date, site, emember, sep=".")
     }
     
-    saveXML(doc, paste0("files/", outFN))
+    saveXML(doc, paste0(outFileDir, outFN))
     return(TRUE)
   }
 }
 
 # Should match filenames of the format "YYYYMMDD.sitename.eXX.out".
-for (filename in list.files("files", pattern = "[[:digit:]]{8}[.]\\w+[.]e[[:digit:]]{2}[.]met$")) {
+for (filename in list.files(metFileDir, pattern = "[[:digit:]]{8}[.]\\w+[.]e[[:digit:]]{2}[.]met$")) {
   apsimFileGen(filename, "Template.apsim")
 }
