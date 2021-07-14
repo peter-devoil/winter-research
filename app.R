@@ -9,13 +9,15 @@ ddf <- readRDS(files[1]) #ddf is a Daily Data Frame ("one I prepared earlier" ha
 plot_ribbon <- function(df, date, siteLoc, period) {#period :: Int, site :: String, date :: Date, ddf :: data.frame
   filter(df, between(Date, date, date + days(period)), site == siteLoc) %>%
     ggplot() +
-    geom_smooth(stat = 'summary', alpha = 0.5, fill = "gray", mapping = aes(daysFromStart, soil_mint_1),
+    geom_smooth(stat = 'summary', alpha = 0.5, fill = "gray", mapping = aes(Date, soil_mint_1),
                 fun.data = median_hilow, fun.args = list(conf.int = 0.5)) +
     xlab("days from start") +
     
     ylab("minimum soil temperature (°C)") +
     
-    scale_x_continuous(n.breaks = period)
+    scale_x_date() +
+    
+    theme_minimal()
 }
 
 
@@ -23,9 +25,13 @@ ui <- fluidPage(h1("Predicting Soil Temps"),
                 
                 wellPanel(
                   selectInput("site", label="Choose a site",
-                              c("breeza", "dalby", "dubbo","emerald", "moree", "surat", "warra")),
-                  dateInput("date", label="Choose a date to start at", value = "1990-06-16"),
-                  sliderInput("period", "Forecast for how many days?", 7, 21, 14, round = TRUE)
+                              unique(ddf$site),
+                              #c("breeza", "dalby", "dubbo","emerald", "moree", "surat", "warra")
+                  ),
+                  dateInput("date", label="Choose a date to start at"),
+                  radioButtons("period", "Forecast for how many days?",
+                               choiceNames = c("1 week", "2 weeks", "3 weeks", "4 weeks"),
+                               choiceValues = c(7, 14, 21, 30))
                 ),
                 
                 plotOutput("plot"),
