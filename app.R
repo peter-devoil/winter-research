@@ -2,9 +2,16 @@ library(shiny)
 library(tidyverse)
 library(lubridate)
 library(Hmisc)
-files <- list.files(pattern = "[.]RData")
-ddf <- readRDS(files[1]) #ddf is a Daily Data Frame ("one I prepared earlier" haha) which has clean data
+
+# Only consider files with names that match ddf.YYYY-MM-DD.RData
+files <- file.info(
+  list.files(pattern = "^ddf[.][0-9]{4}\\-[0-9]{2}\\-[0-9]{2}[.]RData$"))
+
+mostRecent <- files %>% filter(mtime == max(mtime))
+
+ddf <- readRDS(rownames(mostRecent)) #ddf is a Daily Data Frame ("one I prepared earlier" haha) which has clean data
 # This app will pick the first .Rdata file in the working directory that it finds
+
 
 plot_ribbon <- function(df, date, siteLoc, period) {#period :: Int, site :: String, date :: Date, ddf :: data.frame
   filter(df, between(Date, date, date + days(period)), site == siteLoc) %>%
@@ -35,9 +42,19 @@ ui <- fluidPage(h1("Predicting Soil Temps"),
                 plotOutput("plot"),
                 p("Blue line is the median of predicted soil min temp"),
                 p("Grey area is the median 75% of predicted soil min temp"),
+                p("For each site and date, BOM provides 33 ensemble members. \
+                  BOM updates them daily.
+                  An ensemble member is a multi-week weather forecast with \
+                  initial conditions that are slightly different to all the other \
+                  ensemble members. \
+                  This app plots the median minimum soil temp of the emembers \
+                  for each site and date (blue line), \
+                  and the median 75% of minimum soil temps (shaded area)"),
                 
                 tags$footer(
-                  tags$a(href = "https://github.com/lindenwells/winter-research", "View this project on GitHub"))
+                  tags$p("Last updated", mostRecent$mtime),
+                  tags$a(href = "https://github.com/lindenwells/winter-research", "View this project on GitHub"),
+                  tags$p("Disclaimer: experimental use only"))
                 )
 
 server <- function(input, output) {
