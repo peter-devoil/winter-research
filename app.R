@@ -46,9 +46,16 @@ ui <- fluidPage(
                      choiceValues = c(7, 14, 21, 30))
       ),
       
-      plotOutput("plot"),
+      plotOutput(
+        "plot",
+        hover = hoverOpts(
+          id = "plot_hover", delay = 100, delayType = "debounce")
+      ),
+      textOutput("x.pos"),
+      textOutput("y.pos"),
       p("Blue line is the median of predicted soil min temp"),
       p("Grey area is the median 75% of predicted soil min temp"),
+      
       
       tags$footer(
         tags$p("Last updated", mostRecent$mtime),
@@ -65,6 +72,7 @@ ui <- fluidPage(
                   for each site and date (blue line), \
                   and the median 75% of minimum soil temps (shaded area)"),
       
+      
       tags$footer(
         tags$a(href = "https://github.com/lindenwells/winter-research",
         "View this project on GitHub")
@@ -76,9 +84,18 @@ ui <- fluidPage(
 
 server <- function(input, output) {
   
+  # values <- reactiveValues(loc = 0)
+  # 
+  # observeEvent(input$plot_hover$x, {
+  #   values$loc <- input$plot_hover$x
+  # })
+  
   output$plot <- renderPlot({
     plot_ribbon(ddf, input$date, input$site, input$period)
   })
+  
+  output$x.pos <- renderText({input$plot_hover$x})
+  output$y.pos <- renderText({input$plot_hover$y})
   
 }
 
