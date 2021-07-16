@@ -775,6 +775,7 @@
         <variables name="Variables">
           <variable>dd/mm/yyyy as Date</variable>
           <variable>mint_soil(1) as soil_mint_1</variable>
+          <variable>Rain</variable>
         </variables>
         <events name="Reporting Frequency">
           <event>end_day</event>
