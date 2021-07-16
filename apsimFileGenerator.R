@@ -1,6 +1,8 @@
 library("XML")
 library("lubridate")
 
+print(paste("apsimFileGenerator.R started at", now()))
+
 metFileDir <- "files/"
 outFileDir <- "files/"
 
@@ -92,3 +94,5 @@ apsimFileGen <- function(metFileName, templateFileName) {
 for (filename in list.files(metFileDir, pattern = "[[:digit:]]{8}[.]\\w+[.]e[[:digit:]]{2}[.]met$")) {
   apsimFileGen(filename, "Template.apsim")
 }
+
+print(paste("apsimFileGenerator.R finished at", now()))

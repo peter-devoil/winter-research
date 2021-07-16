@@ -1,6 +1,8 @@
 library(tibble)
 library(lubridate)
 
+print(paste("simCollector.R started at", now()))
+
 outFilesDir <- "./files/"
 
 read.out <- function(out.name) {
@@ -36,3 +38,4 @@ ddf <- do.call(rbind, lapply(list.files(path = outFilesDir, "[[:digit:]]{8}_\\w+
 
 saveRDS(ddf, paste0(outFilesDir, "ddf.", today(), ".RData")) #TODO beware this gets today's date, NOT necessarily the date of the forecasts.
 
+print(paste("simCollector.R finished at", now()))
