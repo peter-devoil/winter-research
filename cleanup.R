@@ -12,11 +12,12 @@ fileNamer <- function(date) {
   return(paste0("ddf.", date, ".RData"))
 }
 
-fDays <- readLines("forecastDays.tyt") #TODO what if this fails?
+fDays <- readLines("forecastDays.txt") #TODO what if this fails?
 stopifnot(length(fDays) == 1)
 fDays <- strsplit(fDays, split = ",")
 dates <- lapply(fDays, ymd)
-keepFiles <- lapply(dates, fileNamer)
+keepInterval <- min(dates[[1]]) - days(5) + days(1:15)
+keepFiles <- lapply(keepInterval, fileNamer)
 files <- list.files(pattern = "^ddf[.][[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2}[.]RData$")
 
 for (file in files) {
