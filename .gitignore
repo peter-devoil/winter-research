@@ -40,3 +40,6 @@ vignettes/*.pdf
 
 # Don't wanna commit the daily data!
 files
+rsconnect
+ddf.*.RData
+forecastDays.txt
