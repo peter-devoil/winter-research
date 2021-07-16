@@ -16,8 +16,11 @@ ddf <- readRDS(rownames(mostRecent)) #ddf is a Daily Data Frame ("one I prepared
 plot_ribbon <- function(df, date, siteLoc, period) {#period :: Int, site :: String, date :: Date, ddf :: data.frame
   filter(df, between(Date, date, date + days(period)), site == siteLoc) %>%
     ggplot() +
-    geom_smooth(stat = 'summary', alpha = 0.5, fill = "gray", mapping = aes(Date, soil_mint_1),
+    geom_smooth(stat = 'summary', alpha = 0.5, fill = "gray",
+                mapping = aes(Date, soil_mint_1),
                 fun.data = median_hilow, fun.args = list(conf.int = 0.5)) + #conf.int 0.5 should be the IQR...
+    
+    # TODO add rainfall on the plot somehow
     
     ylab("minimum soil temperature (°C)") +
     
@@ -25,24 +28,35 @@ plot_ribbon <- function(df, date, siteLoc, period) {#period :: Int, site :: Stri
 }
 
 
-ui <- fluidPage(h1("Predicting Soil Temps"),
-                
-                wellPanel(
-                  tags$head(tags$style(type='text/css', ".well {max-width: 300px;
+ui <- fluidPage(
+  h1("Predicting Soil Temps"),
+  
+  tabsetPanel(
+    tabPanel(
+      "Plot",
+      wellPanel(
+        tags$head(tags$style(type='text/css', ".well {max-width: 300px;
                                                                 margin: auto;}")),
-                  selectInput("site", label="Choose a site",
-                              unique(ddf$site),
-                  ),
-                  dateInput("date", label="Choose a date to start at"),
-                  radioButtons("period", "Forecast for how long?",
-                               choiceNames = c("1 week", "2 weeks", "3 weeks", "4 weeks"),
-                               choiceValues = c(7, 14, 21, 30))
-                ),
-                
-                plotOutput("plot"),
-                p("Blue line is the median of predicted soil min temp"),
-                p("Grey area is the median 75% of predicted soil min temp"),
-                p("For each site and date, BOM provides 33 ensemble members. \
+        selectInput("site", label="Choose a site",
+                    unique(ddf$site),
+        ),
+        dateInput("date", label="Choose a date to start at"),
+        radioButtons("period", "Forecast for how long?",
+                     choiceNames = c("1 week", "2 weeks", "3 weeks", "4 weeks"),
+                     choiceValues = c(7, 14, 21, 30))
+      ),
+      
+      plotOutput("plot"),
+      p("Blue line is the median of predicted soil min temp"),
+      p("Grey area is the median 75% of predicted soil min temp"),
+      
+      tags$footer(
+        tags$p("Last updated", mostRecent$mtime),
+        tags$p("Disclaimer: experimental use only"))
+    ),
+    tabPanel(
+      "About",
+      p("For each site and date, BOM provides 33 ensemble members. \
                   BOM updates them daily.
                   An ensemble member is a multi-week weather forecast with \
                   initial conditions that are slightly different to all the other \
@@ -50,12 +64,15 @@ ui <- fluidPage(h1("Predicting Soil Temps"),
                   This app plots the median minimum soil temp of the emembers \
                   for each site and date (blue line), \
                   and the median 75% of minimum soil temps (shaded area)"),
-                
-                tags$footer(
-                  tags$p("Last updated", mostRecent$mtime),
-                  tags$a(href = "https://github.com/lindenwells/winter-research", "View this project on GitHub"),
-                  tags$p("Disclaimer: experimental use only"))
-                )
+      
+      tags$footer(
+        tags$a(href = "https://github.com/lindenwells/winter-research",
+        "View this project on GitHub")
+      )       
+    )
+  )
+)                
+
 
 server <- function(input, output) {
   
