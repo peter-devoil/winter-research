@@ -3,8 +3,8 @@ library("lubridate")
 
 print(paste("apsimFileGenerator.R started at", now()))
 
-metFileDir <- "files/"
-outFileDir <- "files/"
+metFileDir <- "cache/bom/"
+outFileDir <- "cahce/bom/"
 
 # Helper function to pad a day or month out to 2 digits when applicable
 pad <- function(num) {

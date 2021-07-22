@@ -3,7 +3,7 @@ library(lubridate)
 
 print(paste("simCollector.R started at", now()))
 
-outFilesDir <- "./files/"
+outFilesDir <- "cache/bom/"
 
 read.out <- function(out.name) {
   header<-readLines(paste0(outFilesDir, out.name), n=5)
