@@ -23,5 +23,5 @@ jobs:
           host: ${{ secrets.NECTAR_HOST }}
           user: ${{ secrets.NECTAR_USERNAME }}
           key: ${{ secrets.NECTAR_PRIVATE_KEY }}
-          scp: testfile => /home/lwells
+          scp: testfile => /home/lwells/testfile
 
