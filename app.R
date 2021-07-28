@@ -8,17 +8,26 @@ library(leaflet)
 sites<-read.csv("EarlySowingSites.csv", stringsAsFactors = F)
 
 # Only consider files with names that match ddf.YYYY-MM-DD.RData
-files <- file.info(
-  list.files(pattern = "^ddf[.][0-9]{4}\\-[0-9]{2}\\-[0-9]{2}[.]RData$"))
+files <-list.files(pattern = "^ddf[.][0-9]{4}\\-[0-9]{2}\\-[0-9]{2}[.]RData$")
+
+lastUpdateTime <- (file.info(files) %>% filter(mtime == max(mtime)))$mtime
+forecastDates <- as.Date(gsub(".RData", "", gsub("ddf.","", files, fixed=T), fixed=T))
+
+minForecastDate <- min(forecastDates)
+maxForecastDate <- max(forecastDates)
 
 # The most recent file of forecast data
-mostRecent <- files %>% filter(mtime == max(mtime))
-ddf.forecast <- readRDS(rownames(mostRecent)) # Daily Data Frame which has forecast data
+ddf.forecast <- readRDS(paste0("ddf.", max(forecastDates), ".RData")) # Daily Data Frame which has forecast data
 
 ddf.hindcast <- readRDS("ddf.RData") # hindcast data ('1990:12)
 
 plot_ribbon <- function(date, siteLoc, period) {
-  fc <- filter(ddf.forecast, between(Date, date, date + days(period)), site == siteLoc)
+  cat("date=", date,"\n")
+  cat("siteLoc=", siteLoc,"\n")
+  cat("period=", period,"\n")
+  fc <- ddf.forecast[ddf.forecast$site == siteLoc & 
+                       between(ddf.forecast$Date, date, date + days(period)),]
+  
   hcDates <- unique(ddf.hindcast$sowdate)
   hcDates <- sort(as.Date(paste( hcDates, format.Date(date, "%Y"), sep = "-"), format="%d-%b-%Y"))
   x <- date - hcDates
@@ -57,8 +66,9 @@ ui <- fluidPage(
         selectInput("site", label="Site", sites),
         dateInput("date", label="Choose a date to start at", 
                   format = "dd/mm/yy",
-                  min= min(files[,"mtime"]), 
-                  max= max(files[,"mtime"])),
+                  min= minForecastDate, 
+                  max= maxForecastDate,
+                  value = maxForecastDate),
         radioButtons("period", "Forecast for how long?",
                      choiceNames = c("2 weeks", "4 weeks", "6 weeks"),
                      choiceValues = c(14, 28, 42),
@@ -71,7 +81,7 @@ ui <- fluidPage(
         p("Boxes are the long term average"),
       ),      
       tags$footer(
-        tags$p("Last updated", mostRecent$mtime),
+        tags$p("Last updated", lastUpdateTime),
         tags$p("Disclaimer: for experimental use only"))
       ),
     tabPanel(
