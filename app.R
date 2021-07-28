@@ -16,42 +16,8 @@ forecastDates <- as.Date(gsub(".RData", "", gsub("ddf.","", files, fixed=T), fix
 minForecastDate <- min(forecastDates)
 maxForecastDate <- max(forecastDates)
 
-# The most recent file of forecast data
-ddf.forecast <- readRDS(paste0("ddf.", max(forecastDates), ".RData")) # Daily Data Frame which has forecast data
 
 ddf.hindcast <- readRDS("ddf.RData") # hindcast data ('1990:12)
-
-plot_ribbon <- function(date, siteLoc, period) {
-  cat("date=", date,"\n")
-  cat("siteLoc=", siteLoc,"\n")
-  cat("period=", period,"\n")
-  fc <- ddf.forecast[ddf.forecast$site == siteLoc & 
-                       between(ddf.forecast$Date, date, date + days(period)),]
-  
-  hcDates <- unique(ddf.hindcast$sowdate)
-  hcDates <- sort(as.Date(paste( hcDates, format.Date(date, "%Y"), sep = "-"), format="%d-%b-%Y"))
-  x <- date - hcDates
-  hcDate <- tolower(format.Date(hcDates[ which.min(x[ x > 0]) ], format="%d-%b"))
-  print(paste0("hindcast date = ", hcDate))
-  
-  hc <- filter (ddf.hindcast, sowdate == hcDate & src == "Pred", site == tolower(siteLoc)) %>% 
-    mutate(dateNorm = as.Date(paste0(format.Date(Date, "%d/%m"),
-                                    "/", format.Date(date, "%Y")), format="%d/%m/%Y")) %>%
-    filter(between(dateNorm, date, date + days(period)))
- 
-  #print(paste0("hindcast date =", hcDate, ", n=",nrow(hc)))
-  ggplot() +
-    geom_boxplot(data=hc, aes(x=dateNorm, y=soil_mint_1, group=dateNorm), outlier.shape = NA)  +
-    geom_smooth(data = fc, stat = 'summary', alpha = 0.65, fill = "gray",
-                mapping = aes(Date, soil_mint_1),
-                fun.data = median_hilow, fun.args = list(conf.int = 0.5)) + #conf.int 0.5 should be the IQR...
-    # TODO add rainfall on the plot somehow
-    labs(title=paste("Minimum soil temperature at ", siteLoc),  
-         y="Minimum Soil Temperature (°C)",
-         x="") +
-    theme_minimal()
-}
-
 
 ui <- fluidPage(
   h3("Soil Temperature Prediction"),
@@ -118,7 +84,21 @@ server <- function(input, output, session) {
   })
   
   output$plot <- renderPlot({
-    plot_ribbon(input$date, input$site, input$period)
+    hc <- hindcast()
+    fc <- forecast()
+    #print(paste0("hindcast date =", hcDate, ", n=",nrow(hc)))
+    ggplot() +
+      geom_boxplot(data=hc, aes(x=dateNorm, y=soil_mint_1, group=dateNorm), outlier.shape = NA)  +
+      geom_smooth(data = fc, stat = 'summary', alpha = 0.65, fill = "gray",
+                  mapping = aes(Date, soil_mint_1),
+                  fun.data = median_hilow, fun.args = list(conf.int = 0.5)) + #conf.int 0.5 should be the IQR...
+      # TODO add rainfall on the plot somehow
+      labs(title=paste("Minimum soil temperature at ", input$site),  
+           y="Minimum Soil Temperature (°C)",
+           x="") +
+      theme_minimal()
+    
+#    plot_ribbon(input$date, input$site, input$period)
   })
   
   output$map <- renderLeaflet({
@@ -128,6 +108,25 @@ server <- function(input, output, session) {
       ) %>%
       addMarkers(data = sites, ~long, ~lat, label=~Name, layerId=~Name,
                  labelOptions = labelOptions(noHide = T, textOnly = TRUE))
+  })
+  
+  forecast <- reactive({
+    # The most recent file of forecast data
+    ddf <- readRDS(paste0("ddf.", input$date, ".RData")) # Daily Data Frame which has forecast data
+    return(ddf[ddf$site ==  input$site & between(ddf$Date, input$date, input$date + days(input$period)),])
+  })
+  
+  hindcast <- reactive({
+    hcDates <- unique(ddf.hindcast$sowdate)
+    hcDates <- sort(as.Date(paste( hcDates, format.Date(input$date, "%Y"), sep = "-"), format="%d-%b-%Y"))
+    x <- input$date - hcDates
+    hcDate <- tolower(format.Date(hcDates[ which.min(x[ x > 0]) ], format="%d-%b"))
+    #print(paste0("hindcast date = ", hcDate))
+    
+    return(filter (ddf.hindcast, sowdate == hcDate & src == "Pred", site == tolower(input$site)) %>% 
+      mutate(dateNorm = as.Date(paste0(format.Date(Date, "%d/%m"),
+                                       "/", format.Date(input$date, "%Y")), format="%d/%m/%Y")) %>%
+      filter(between(dateNorm, input$date, input$date + days(input$period))))
   })
 }
 
