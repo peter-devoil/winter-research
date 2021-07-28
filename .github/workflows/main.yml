@@ -13,7 +13,8 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  copy_to_nectar:
+  build:
+    name: nectar
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     steps:
@@ -24,6 +25,5 @@ jobs:
         username: ${{ secrets.NECTAR_USERNAME }}
         key: ${{ secrets.NECTAR_PRIVATE_KEY }}
         passphrase: ${{ secrets.NECTAR_PASSPHRASE }}
-        source: "testfile"
-        target: "testfile"
+        source: "testfile"          target: "testfile"
 
