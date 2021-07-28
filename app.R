@@ -123,10 +123,11 @@ server <- function(input, output, session) {
     hcDate <- tolower(format.Date(hcDates[ which.min(x[ x > 0]) ], format="%d-%b"))
     #print(paste0("hindcast date = ", hcDate))
     
-    return(filter (ddf.hindcast, sowdate == hcDate & src == "Pred", site == tolower(input$site)) %>% 
-      mutate(dateNorm = as.Date(paste0(format.Date(Date, "%d/%m"),
+    return(filter (ddf.hindcast, site == tolower(input$site) & src == "Pred") %>%
+           filter (sowdate == hcDate ) %>% 
+           mutate(dateNorm = as.Date(paste0(format.Date(Date, "%d/%m"),
                                        "/", format.Date(input$date, "%Y")), format="%d/%m/%Y")) %>%
-      filter(between(dateNorm, input$date, input$date + days(input$period))))
+           filter(between(dateNorm, input$date, input$date + days(input$period))))
   })
 }
 
