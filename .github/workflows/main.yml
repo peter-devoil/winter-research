@@ -25,5 +25,6 @@ jobs:
         username: ${{ secrets.NECTAR_USERNAME }}
         key: ${{ secrets.NECTAR_PRIVATE_KEY }}
         passphrase: ${{ secrets.NECTAR_PASSPHRASE }}
-        source: "testfile"          target: "testfile"
+        source: "testfile"
+        target: "testfile"
 
