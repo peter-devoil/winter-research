@@ -30,7 +30,17 @@ jobs:
             app.R => /srv/shiny-server/lwells
             cleanup.R => /srv/shiny-server/lwells
             EarlySowingSites.csv => /srv/shiny-server/lwells
+            # data/getIt.bomNC.R => temp
+            # data/getIt.Hindcast.R => temp
+            # RunHindcast.R => temp
+            # Template_hindcast.apsim => temp
+            # apsimFileGenerator.R => temp
+            # simCollector.R => temp
+            # Template.R => temp
+            # EarlySowingSites.csv
+            
           last_ssh: |
             cd /srv/shiny-server/lwells
             chgrp uploaders app.R cleanup.R EarlySowingSites.csv
+            # scp temp/* lwells@qaafi-hss8hy2.instrument.net.uq.edu.au:/home/data/access-s/met
           
