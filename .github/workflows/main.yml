@@ -31,5 +31,6 @@ jobs:
             cleanup.R => /srv/shiny-server/lwells
             EarlySowingSites.csv => /srv/shiny-server/lwells
           last_ssh: |
+            cd /srv/shiny-server/lwells
             chgrp uploaders app.R cleanup.R EarlySowingSites.csv
           
