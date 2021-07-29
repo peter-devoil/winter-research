@@ -17,11 +17,13 @@ jobs:
     name: nectar
     runs-on: ubuntu-latest
     steps:
+      - name: checkout
+        uses: actions/checkout@v2.3.4
       - name: Copy to nectar
         uses: cross-the-world/ssh-scp-ssh-pipelines@v1.1.4
         with:
           host: ${{ secrets.NECTAR_HOST }}
           user: ${{ secrets.NECTAR_USERNAME }}
           key: ${{ secrets.NECTAR_PRIVATE_KEY }}
-          scp: testfile testfile2 => /home/lwells
+          scp: testfile => /home/lwells
 
