@@ -1,0 +1,48 @@
+# This is a basic workflow to help you get started with Actions
+
+name: test_scp
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+#   push:
+#     branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  copy-to-nectar:
+    name: nectar
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2.3.4
+        
+      - name: Copy files
+        uses: cross-the-world/ssh-scp-ssh-pipelines@v1.1.4
+        with:
+          host: ${{ secrets.NECTAR_HOST }}
+          user: ${{ secrets.NECTAR_USERNAME }}
+          key: ${{ secrets.NECTAR_PRIVATE_KEY }}
+          
+          scp: |
+              data/getIt.bomNC.R => /tmp/ssh_files
+            
+#            app.R => /srv/shiny-server/lwells
+#            cleanup.R => /srv/shiny-server/lwells
+#            EarlySowingSites.csv => /srv/shiny-server/lwells
+
+#            data/getIt.Hindcast.R => /tmp
+#            RunHindcast.R => /tmp
+#            Template_hindcast.apsim => /tmp
+#            apsimFileGenerator.R => /tmp
+#            simCollector.R => /tmp
+#            Template.R => /tmp
+#            EarlySowingSites.csv => /tmp
+            
+          last_ssh: |
+            cd /srv/shiny-server/lwells
+            chgrp uploaders app.R cleanup.R EarlySowingSites.csv
+            scp tmp/ssh_files/* lwells@qaafi-hss8hy2.instrument.net.uq.edu.au:/home/data/access-s/met
