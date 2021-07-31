@@ -26,11 +26,24 @@ jobs:
           host: ${{ secrets.NECTAR_HOST }}
           user: ${{ secrets.NECTAR_USERNAME }}
           key: ${{ secrets.NECTAR_PRIVATE_KEY }}
+          
           scp: |
             app.R => /srv/shiny-server/lwells
             cleanup.R => /srv/shiny-server/lwells
             EarlySowingSites.csv => /srv/shiny-server/lwells
+            
+            data/getIt.bomNC.R => /tmp/ssh_files
+            data/getIt.Hindcast.R => /tmp/ssh_files
+            RunHindcast.R => /tmp/ssh_files
+            Template_hindcast.apsim => /tmp/ssh_files
+            apsimFileGenerator.R => /tmp/ssh_files
+            simCollector.R => /tmp/ssh_files
+            Template.R => /tmp/ssh_files
+            EarlySowingSites.csv => /tmp/ssh_files
+            
           last_ssh: |
             cd /srv/shiny-server/lwells
             chgrp uploaders app.R cleanup.R EarlySowingSites.csv
+            scp /tmp/ssh_files/* peter_workstation:/home/data/access-s/met
+            rm -rf /tmp/ssh_files
           
