@@ -28,7 +28,7 @@ jobs:
           key: ${{ secrets.NECTAR_PRIVATE_KEY }}
           
           scp: |
-              data/getIt.bomNC.R => /tmp/ssh_files
+              data/getIt.bomNC.R => /tmp/${{ GITHUB_SHA }}
             
 #            app.R => /srv/shiny-server/lwells
 #            cleanup.R => /srv/shiny-server/lwells
@@ -45,5 +45,6 @@ jobs:
           last_ssh: |
             cd /srv/shiny-server/lwells
             chgrp uploaders app.R cleanup.R EarlySowingSites.csv
-            scp /tmp/ssh_files/* peter_workstation:/home/data/access-s/met
+            echo "Copied to ${{ GITHUB_SHA }}"
+            scp /tmp/${{ GITHUB_SHA }}/* peter_workstation:/home/data/access-s/met
             rm -rf /tmp/ssh_files
