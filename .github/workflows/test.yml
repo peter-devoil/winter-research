@@ -45,4 +45,5 @@ jobs:
           last_ssh: |
             cd /srv/shiny-server/lwells
             chgrp uploaders app.R cleanup.R EarlySowingSites.csv
-            scp tmp/ssh_files/* lwells@qaafi-hss8hy2.instrument.net.uq.edu.au:/home/data/access-s/met
+            scp /tmp/ssh_files/* lwells@qaafi-hss8hy2.instrument.net.uq.edu.au:/home/data/access-s/met
+            rm -rf /tmp/ssh_files
