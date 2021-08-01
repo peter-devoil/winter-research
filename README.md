@@ -1,8 +1,7 @@
 # Predicting (and Plotting) Minimum Soil Temps
 
 ## Overview
-Deployed at http://apsimpoama.ddns.net/lwells/ and https://linden-wells.shinyapps.io/soil-min-temp-prediction/
-
+Deployed at http://apsimpoama.ddns.net/lwells/
 So there's this trendy farming technique of winter-sowing sorghum.
 
 There is lots of data from APSIM. Our goal is to plot that data in a way that's helpful to farmers.
