@@ -121,7 +121,7 @@ server <- function(input, output, session) {
                   mapping = aes(Date, soil_mint_1),
                   fun.data = median_hilow, fun.args = list(conf.int = 0.5)) + #conf.int 0.5 should be the IQR...
       geom_hline(yintercept=12, colour="red3") +
-      geom_text(aes(x=max(hc$dateNorm), y=12, label = "12 oC"), colour="red3", hjust="right", nudge_y=0.4) +
+      geom_text(aes(x=max(hc$dateNorm), y=12, label = "12°C"), colour="red3", hjust="right", nudge_y=0.4) +
       # TODO add rainfall on the plot somehow
       labs(title=paste("Minimum soil temperature at ", input$site),  
            y="Minimum Soil Temperature (°C)",
