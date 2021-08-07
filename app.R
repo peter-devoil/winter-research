@@ -99,14 +99,17 @@ server <- function(input, output, session) {
     hcDates <- sort(as.Date(theseDates, format="%d-%b-%Y"))
     x <- forecastDate - hcDates
     hcDate <- tolower(format.Date(hcDates[ which.min(x[ x > 0]) ], format="%d-%b"))
+    hcDate <- sub("^0+", "", hcDate) # remove leading zero
     dbg(paste0("hindcast date = ", hcDate,"\n"))
     
-    return(ddf.hindcast %>% 
+    result <- ddf.hindcast %>% 
              filter(site == tolower(input$site) & src == "Pred") %>%
              filter(sowdate == hcDate ) %>% 
              mutate(dateNorm = as.Date(paste0(format.Date(Date, "%d/%m"),
                                        "/", format.Date(forecastDate, "%Y")), format="%d/%m/%Y")) %>%
-             filter(between(dateNorm, forecastDate, forecastDate + days(input$period))))
+             filter(between(dateNorm, forecastDate, forecastDate + days(input$period)))
+    #dbg(paste0("hc rows  = ", nrow(result),"\n"))
+    return(result)
   })
   
   output$plot <- renderPlot({
@@ -117,6 +120,8 @@ server <- function(input, output, session) {
       geom_smooth(data = fc, stat = 'summary', alpha = 0.65, fill = "gray",
                   mapping = aes(Date, soil_mint_1),
                   fun.data = median_hilow, fun.args = list(conf.int = 0.5)) + #conf.int 0.5 should be the IQR...
+      geom_hline(yintercept=12, colour="red3") +
+      geom_text(aes(x=max(hc$dateNorm), y=12, label = "12°C"), colour="red3", hjust="right", nudge_y=0.4) +
       # TODO add rainfall on the plot somehow
       labs(title=paste("Minimum soil temperature at ", input$site),  
            y="Minimum Soil Temperature (°C)",
