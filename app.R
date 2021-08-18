@@ -5,7 +5,6 @@ library(Hmisc)
 library(leaflet)
 
 dbg<- function(...) cat(sprintf(...), sep='', file=stderr())
-
 sites<-read.csv("EarlySowingSites.csv", stringsAsFactors = F)
 
 # Only consider files with names that match ddf.YYYY-MM-DD.RData
@@ -17,8 +16,8 @@ forecastDates <- as.Date(gsub(".RData", "", gsub("ddf.","", files, fixed=T), fix
 minForecastDate <- min(forecastDates)
 forecastDate <- maxForecastDate <- max(forecastDates)
 
-ddf.hindcast <- readRDS("ddf.RData") # hindcast data ('1990:12)
-dbg(paste0("read ", nrow(ddf.hindcast), " lines from ddf.RData\n"))
+hcDir <- "./" # ../../Soil Temperature/
+load(paste0(hcDir, "Hindcast.sowdates.RData"))
 
 ui <- fluidPage(
   h3("Soil Temperature Prediction"),
@@ -84,31 +83,44 @@ server <- function(input, output, session) {
   })
 
   thisYear <- reactive({return(format.Date(forecastDate, "%Y"))})
-  
-  forecast <- reactive({
+
+  forecast.site <- reactive({
     # The most recent file of forecast data
     inputFile<- paste0("ddf.", forecastDate, ".RData")
     ddf <- readRDS(inputFile) # Daily Data Frame which has forecast data
     dbg(paste0("read ", nrow(ddf), " lines from ", inputFile, "\n"))
+    return(ddf)
+  })
+  
+  forecast <- reactive({
+    ddf <- forecast.site()
     return(ddf[ddf$site ==  input$site & between(ddf$Date, forecastDate, forecastDate + days(input$period)),])
   })
   
+  hindcast.site <- reactive({
+     if (file.exists(paste0(hcDir, "Hindcast.", tolower(input$site), ".RData"))) {
+       load(paste0(hcDir, "Hindcast.", tolower(input$site), ".RData"))
+       ddf.hindcast$Date<- as.Date(ddf.hindcast$Date, format="%d/%m/%Y")
+       ddf.hindcast$src<- ifelse(ddf.hindcast$emember=="obs" , "Obs", "Pred")
+       return(ddf.hindcast)
+     }
+     return(NULL)
+  })
+  
   hindcast <- reactive({
-    hcDates <- as.character(unique(ddf.hindcast$sowdate))
-    theseDates <- paste( hcDates, thisYear(), sep = "-")
+    theseDates <- paste( sowDates, thisYear(), sep = "-")
     hcDates <- sort(as.Date(theseDates, format="%d-%b-%Y"))
     x <- forecastDate - hcDates
     hcDate <- tolower(format.Date(hcDates[ which.min(x[ x > 0]) ], format="%d-%b"))
     hcDate <- sub("^0+", "", hcDate) # remove leading zero
-    dbg(paste0("hindcast date = ", hcDate,"\n"))
-    
-    result <- ddf.hindcast %>% 
-             filter(site == tolower(input$site) & src == "Pred") %>%
-             filter(sowdate == hcDate ) %>% 
-             mutate(dateNorm = as.Date(paste0(format.Date(Date, "%d/%m"),
-                                       "/", format.Date(forecastDate, "%Y")), format="%d/%m/%Y")) %>%
-             filter(between(dateNorm, forecastDate, forecastDate + days(input$period)))
-    #dbg(paste0("hc rows  = ", nrow(result),"\n"))
+    #dbg(paste0("hindcast date = ", hcDate,"\n"))
+    forecastYear <- format.Date(forecastDate, "%Y")
+    result <- hindcast.site() %>% 
+      filter(src == "Pred" & sowdate == hcDate )  %>% 
+      mutate(dateNorm = as.Date(
+        paste0(format.Date(Date, "%d/%m"), "/", forecastYear), format="%d/%m/%Y")) %>%
+      filter(between(dateNorm, forecastDate, forecastDate + days(input$period)))
+    dbg(paste0("hc2 rows  = ", nrow(result),"\n"))
     return(result)
   })
   
