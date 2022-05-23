@@ -170,6 +170,8 @@ is.leapyear=function(year) {
    # The forecasts we are interested in. x.y for x=month, y=year offset (december)
  monthDays<-list()
 #   monthDays[["1-may"]] <- c("0501", "0401")
+monthDays[["1-may"]] <- c("0417.0", "0425.0", "0501.0")
+monthDays[["15-may"]] <- c("0501.0", "0509.0", "0517.0")
 monthDays[["1-jun"]] <- c("0517.0", "0525.0", "0601.0")
 monthDays[["15-jun"]] <- c("0601.0", "0609.0", "0617.0")
 monthDays[["1-jul"]] <- c("0617.0", "0625.0", "0701.0")

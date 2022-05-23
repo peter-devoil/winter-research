@@ -63,7 +63,10 @@ for (variable in c("pr", "rsds", "tasmax", "tasmin")) {
 
 # Extract our sites of interest from each netcdf file
 last<- function(x){return(x[length(x)])}
-for (ncFile in list.files(path=cache, glob2rx("*.nc"), full.names = T)) {
+ncFiles <- list.files(path=cache, glob2rx("*.nc"), full.names = T)
+#ncFiles <- list.files(path=cache, glob2rx("s_daq5_*_20220516*.nc"), full.names = T)
+
+for (ncFile in ncFiles) {
    z<- last(strsplit(ncFile, "/")[[1]])
    z<- strsplit(z, "_")[[1]]
    variable <- z[3]
@@ -73,7 +76,7 @@ for (ncFile in list.files(path=cache, glob2rx("*.nc"), full.names = T)) {
    if (file.exists(localFile)) { next }
    
    cat("Extracting from ", ncFile, "\n")
-   nc <- ncdf4::nc_open(ncFile)  
+   nc <- ncdf4::nc_open(ncFile)
    
    lon <- ncvar_get(nc,"lon")
    lat <- ncvar_get(nc,"lat")
@@ -132,6 +135,7 @@ for (i in 1:nrow(sites)) {
 
 # create metfiles for each site.
 localFiles <- list.files(path=cache,glob2rx("*.RData"))
+#localFiles <- "cache/bom/ddf.2022-05-18.RData"
 fcastDates <- unique(unlist(lapply(strsplit(localFiles, ".", fixed = T), function(x) {x[1]})))
 for (fcastDate in fcastDates) {
    for(iSite in 1:nrow(sites)) {
@@ -144,6 +148,7 @@ for (fcastDate in fcastDates) {
             x<- environment()
             rDataFile <- paste0(cache, fcastDate, ".", v, ".", emember, ".RData")
             if (file.exists(rDataFile)) {
+               cat(paste("Loading", rDataFile, "\n"))
                load(rDataFile, envir = x)
                if (is.null(df)) {
                   # Add date on first time

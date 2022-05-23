@@ -8,7 +8,7 @@ library("xml2")
 library("data.table")
 
 sites<-read.csv("EarlySowingSites.csv")$Name
-sowDates <- c("1-jun", "15-jun", "1-jul", "15-jul", "1-aug", "15-aug", "1-sep", "15-sep", "1-oct", "15-oct")
+sowDates <- c("1-may", "15-may", "1-jun", "15-jun", "1-jul", "15-jul", "1-aug", "15-aug", "1-sep", "15-sep", "1-oct", "15-oct")
 
 
 xmlAdd <- function(parent, name) {
@@ -141,7 +141,6 @@ read.apsim <- function(apsim.name) {
   #  cat(apsim.name, " = ", ncol(apsim), "\n")
   return(apsim)
 }
-
 df.hindcast<- do.call(rbind, lapply(paste0(simulations, " Daily.out"), read.apsim ))
 for (f in list.files(path=".", pattern=glob2rx("Hindcast_*.*"))) {
   file.remove(f)
@@ -151,7 +150,5 @@ save(df.hindcast, file="Hindcast.RData")
 save(sowDates, file="Hindcast.sowdates.RData")
 for(thisSite in unique(df.hindcast$site)) {
    ddf.hindcast <- df.hindcast[df.hindcast$site == thisSite, ]
-   ddf.hindcast$src<- ifelse(ddf.hindcast$emember=="obs" , "Obs", "Pred")
-   
    save(ddf.hindcast, file=paste0("Hindcast.", thisSite, ".RData"))
 }

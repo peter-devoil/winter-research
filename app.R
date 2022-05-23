@@ -103,7 +103,8 @@ server <- function(input, output, session) {
        ddf.hindcast$Date<- as.Date(ddf.hindcast$Date, format="%d/%m/%Y")
        ddf.hindcast$src<- ifelse(ddf.hindcast$emember=="obs" , "Obs", "Pred")
        return(ddf.hindcast)
-     }
+     } 
+     #dbg(paste0("missing file ", hcDir, "Hindcast.", tolower(input$site), ".RData"))
      return(NULL)
   })
   
@@ -115,30 +116,41 @@ server <- function(input, output, session) {
     hcDate <- sub("^0+", "", hcDate) # remove leading zero
     #dbg(paste0("hindcast date = ", hcDate,"\n"))
     forecastYear <- format.Date(forecastDate, "%Y")
-    result <- hindcast.site() %>% 
-      filter(src == "Pred" & sowdate == hcDate )  %>% 
-      mutate(dateNorm = as.Date(
-        paste0(format.Date(Date, "%d/%m"), "/", forecastYear), format="%d/%m/%Y")) %>%
-      filter(between(dateNorm, forecastDate, forecastDate + days(input$period)))
-    dbg(paste0("hc2 rows  = ", nrow(result),"\n"))
+    if (length(hcDate) == 0) {
+      result <- NULL
+    } else {
+      result <- hindcast.site() %>% 
+        filter(src == "Pred" & sowdate == hcDate )  %>% 
+        mutate(dateNorm = as.Date(
+          paste0(format.Date(Date, "%d/%m"), "/", forecastYear), format="%d/%m/%Y")) %>%
+        filter(between(dateNorm, forecastDate, forecastDate + days(input$period)))
+      dbg(paste0("hc2 rows  = ", nrow(result),"\n"))
+    }
     return(result)
   })
   
   output$plot <- renderPlot({
     fc <- forecast()
     hc <- hindcast()
-    ggplot() +
-      geom_boxplot(data = hc, aes(x=dateNorm, y=soil_mint_1, group=dateNorm), outlier.shape = NA)  +
-      geom_smooth(data = fc, stat = 'summary', alpha = 0.65, fill = "gray",
+    g <- ggplot() 
+    if (!is.null(hc)) {
+      g <- g + geom_boxplot(data = hc, aes(x=dateNorm, y=soil_mint_1, group=dateNorm), outlier.shape = NA)  
+    }
+    if (!is.null(fc)) {
+      g <- g + geom_smooth(data = fc, stat = 'summary', alpha = 0.65, fill = "gray",
                   mapping = aes(Date, soil_mint_1),
-                  fun.data = median_hilow, fun.args = list(conf.int = 0.5)) + #conf.int 0.5 should be the IQR...
-      geom_hline(yintercept=12, colour="red3") +
-      geom_text(aes(x=max(hc$dateNorm), y=12, label = "12°C"), colour="red3", hjust="right", nudge_y=0.4) +
-      # TODO add rainfall on the plot somehow
-      labs(title=paste("Minimum soil temperature at ", input$site),  
+                  fun.data = median_hilow, fun.args = list(conf.int = 0.5))  #conf.int 0.5 should be the IQR...
+    }
+    g <- g + geom_hline(yintercept=12, colour="red3") 
+    if (!is.null(hc)) {
+      g <- g + geom_text(aes(x=max(hc$dateNorm), y=12, label = "12°C"), colour="red3", hjust="right", nudge_y=0.4) 
+    }
+    # TODO add rainfall on the plot somehow
+    g <- g + labs(title=paste("Minimum soil temperature at ", input$site),  
            y="Minimum Soil Temperature (°C)",
            x="") +
       theme_minimal()
+    return(g)
   })
   
   output$map <- renderLeaflet({
